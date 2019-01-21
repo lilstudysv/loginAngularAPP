@@ -12,7 +12,11 @@
                   <label for="password">Contraseña</label>
                   <input type="password" name="password" id="password" class="form-control">
               </div>
-              <input type="button" value="ENVIAR" class="btn btn-primary btn-block btn-lg">
+              <input type="button" value="ENVIAR"  class="btn btn-primary btn-block btn-lg"
+              (click)="getPost()">
+              <div *ngFor="let post of posts | async">
+                {{ post | json }}
+              </div>
             </form>
           </div>
         </div>
