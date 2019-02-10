@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+import { TokenStorageService} from 'src/app/services/auth/token-storage.service';
 import { User } from 'src/app/models/User';
+
 
 @Component({
   selector: 'app-login',
@@ -12,10 +15,12 @@ export class LoginComponent implements OnInit {
   username:String;
   password:String;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private tokenStorage: TokenStorageService,
+              private router: Router) { }
 
   ngOnInit() {}
-  
+
   getPost(){
     const user = new User(
       "pablo",
@@ -23,17 +28,18 @@ export class LoginComponent implements OnInit {
     );
     
     this.loginService.getLogin$(user).subscribe(
-      resp => {
-        console.log('User:' + resp.headers.get('X-Custom-Header'));
-        console.log('User2:' + JSON.stringify(resp));
-        console.log('User2:' +  JSON.stringify(resp.headers));
-
+      response => {
+        if(response.status==200){     
+          this.tokenStorage.saveToken(response.headers.get("Authorization"));
+          this.router.navigate(['/home']);
+        }
+        else{
+          alert("Datos incorrectos");
+        }
+      },
+      err => {
+        alert("Datos incorrectos2");
       }
-      ,
-      err => console.error('Ops: ' + err.message)
-    );  
+     );  
   }
-
-  
-
 }
