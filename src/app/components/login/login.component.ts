@@ -23,13 +23,14 @@ export class LoginComponent implements OnInit {
 
   getPost(){
     const user = new User(
+      1,
       "pablo",
       "pablo"
     );
     
     this.loginService.getLogin$(user).subscribe(
       response => {
-        if(response.status==200){     
+        if(response.status==200){
           this.tokenStorage.saveToken(response.headers.get("Authorization"));
           this.router.navigate(['/home']);
         }

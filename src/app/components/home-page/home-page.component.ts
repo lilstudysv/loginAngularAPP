@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
+import { TasksService } from 'src/app/services/tasks.service';
+import { Task } from 'src/app/models/Task';
 
 @Component({
   selector: 'app-home-page',
@@ -8,33 +10,26 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private taskService: TasksService) { }
 
   ngOnInit() {
-    console.log("ola");
-    this.getPost2();
+    this.get();
   }
   
-  public tasks;
+  public tasks: Task[] =[];
 
-  getPost2(){
-    this.loginService.getLogin2$().subscribe(
-      response => {
-        if(response.status==200){     
-          console.log(response);
-          console.log(response.body);
-          this.tasks=response.body;
-          this.tasks=[1,2,3,4,5,6,7,8,9,0,0,1];
-        }
-        else{
-          alert("Datos incorrectos");
-        }
+  get(){
+    this.taskService.getTask().subscribe((response: any[]) => {
+        console.log(response);
+        this.tasks=response;
+        console.log(this.tasks[1].id);
+
       },
       err => {
         alert("Datos incorrectos2");
+        console.log(err);
       }
-     );
+     );  
   }
-
-
 }
