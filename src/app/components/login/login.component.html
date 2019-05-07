@@ -1,22 +1,20 @@
 <div class="row">
-    <div class="col-md-6 mx-auto mt-5">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="text-center">LOGIN</h1>
-            <form>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" class="form-control">
-              </div>
-              <div class="form-group">
-                  <label for="password">Contraseña</label>
-                  <input type="password" name="password" id="password" class="form-control">
-              </div>
-              <input type="button" value="ENVIAR"  class="btn btn-primary btn-block btn-lg"
-              (click)="getPost()">
-   
-            </form>
+  <div class="col-md-6 mx-auto mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">LOGIN</h1>
+        <form class="form-Login" #LoginForm="ngForm" (ngSubmit)="onLogin(LoginForm)">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" [(ngModel)]="this.login.username" name="username">
           </div>
-        </div>
-    </div>     
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" class="form-control" [(ngModel)]="this.login.password" name="password">
+          </div>
+          <button type="supmit" class="btn btn-primary btn-block btn-lg">ENVIAR</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

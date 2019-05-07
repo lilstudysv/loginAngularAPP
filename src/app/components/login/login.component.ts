@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
-import { TokenStorageService} from 'src/app/services/auth/token-storage.service';
-import { User } from 'src/app/models/User';
+import { TokenStorageService } from 'src/app/services/auth/token-storage.service';
+import { NgForm } from '@angular/forms';
+import { LoginInterface } from 'src/app/models/Login';
 
 
 @Component({
@@ -12,35 +13,35 @@ import { User } from 'src/app/models/User';
 })
 export class LoginComponent implements OnInit {
 
-  username:String;
-  password:String;
+  username: String;
+  password: String;
 
-  constructor(private loginService: LoginService,
-              private tokenStorage: TokenStorageService,
-              private router: Router) { }
+  constructor(
+    private loginService: LoginService,
+    private tokenStorage: TokenStorageService,
+    private router: Router) { }
 
-  ngOnInit() {}
+  private login: LoginInterface = {
+    username: '',
+    password: ''
+  }
+  ngOnInit() { }
 
-  getPost(){
-    const user = new User(
-      1,
-      "pablo",
-      "pablo"
-    );
-    
-    this.loginService.getLogin$(user).subscribe(
+  onLogin(loginForm: NgForm) {
+    console.log(loginForm.value)
+    this.loginService.getLogin$(loginForm.value).subscribe(
       response => {
-        if(response.status==200){
+        if (response.status == 200) {
           this.tokenStorage.saveToken(response.headers.get("Authorization"));
           this.router.navigate(['/home']);
         }
-        else{
+        else {
           alert("Datos incorrectos");
         }
       },
       err => {
         alert("Datos incorrectos2");
       }
-     );  
+    );
   }
 }

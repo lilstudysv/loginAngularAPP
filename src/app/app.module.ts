@@ -7,17 +7,23 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
+import { TaskComponent } from './components/task/task.component';
 import { TokenInterceptorService } from './services/auth/token-interceptor.service';
+import { NewTaskComponent } from './components/new-task/new-task.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    TaskComponent,
+    NewTaskComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule
   ],
